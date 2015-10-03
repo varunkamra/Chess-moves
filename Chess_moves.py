@@ -1,6 +1,10 @@
+# This program calculates the moves of all the chess pieces from a given chess board configuration
+
+# board variable represents the chess board configuration;
+# lower case characters represent black pieces and upper case represents white peices.
 board=[['r','kn',' ','q','k',' ',' ','r'],[' ','b',' ','p',' ','p',' ','p'],[' ',' ','p','b',' ','kn',' ',' '],['p',' ',' ',' ','p',' ',' ',' '],[' ',' ',' ','P',' ',' ',' ',' '],[' ','P','KN','Q',' ','KN',' ',' '],['P',' ','P',' ','P',' ','P',' '],['R',' ','B',' ','K','B',' ','R']]
 
-
+# generates the player pieces
 def player_pieces(board,player):
     for i in range(len(board)):
         for j in range(len(board)):
@@ -9,6 +13,7 @@ def player_pieces(board,player):
             elif(player==2 and board[i][j].islower()):
                 yield(board[i][j],(i,j))
 
+# moves_pawn calculates the possible moves of all the pawns on the chess board
 def moves_pawn(board,player,t):
     list=[]
     if(player==1):
@@ -33,6 +38,7 @@ def moves_pawn(board,player,t):
             list.append(((t),(t[0]+1,t[1]+1)))
     return list
 
+# function for calculating moves of all the bishops on the board
 def moves_bishop(board,player,t):
     list=[]
     i=1
@@ -86,6 +92,7 @@ def moves_bishop(board,player,t):
 
     return list
 
+# function for calculating moves of both Queens on the board
 def moves_queen(board,player,t):
     list=[]
 
@@ -187,6 +194,7 @@ def moves_queen(board,player,t):
 
     return list
 
+# function for calculating moves of a rook.
 def moves_rook(board,player,t):
     list=[]
     #rook moves up
@@ -231,6 +239,7 @@ def moves_rook(board,player,t):
 
     return list
 
+# function for calculating the moves of both Kings on the board.
 def moves_king(board,player,t):
     list=[]
     #king moves up for player 1 and moves down for player 2
@@ -291,6 +300,7 @@ def moves_king(board,player,t):
 
     return list
 
+# function for calculating moves of the Knight
 def moves_knight(board,player,t):
     list=[]
     if(player==1 and not(t[0]+1>7) and not (t[1]+2>7) and (board[t[0]+1][t[1]+2]==' ' or (board[t[0]+1][t[1]+2].islower() and board[t[0]+1][t[1]+2].lower()!='k'))):
@@ -342,7 +352,8 @@ def moves_knight(board,player,t):
         list.append(((t),(t[0]+2,t[1]-1)))
 
     return list
-        
+
+# function that calls proper functions based on the type of piece it receives.        
 def moves_function(piece):
     if(piece.lower()=='p'):
         return moves_pawn
@@ -357,6 +368,7 @@ def moves_function(piece):
     elif(piece.lower()=='k'):
         return moves_king
 
+# Main function that finds all the moves of the specified player.
 def possible_moves(board,player):
     list=[]
     for i in player_pieces(board,int(player)):
